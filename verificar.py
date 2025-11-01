@@ -59,8 +59,12 @@ for test in range(tests_needed):
 
     #loop through checks
     for i in range(1, checks_needed + 1):
-        input_file = open(f"{check_path}\\{i}.in", "r", encoding="utf-8")
-        answer_file = open(f"{check_path}\\{i}.sol", "r", encoding="utf-8")
+        try:
+            input_file = open(f"{check_path}\\{i}.in", "r", encoding="utf-8")
+            answer_file = open(f"{check_path}\\{i}.sol", "r", encoding="utf-8")
+        except:
+            input_file = open(f"{check_path}\\in{i}", "r", encoding="utf-8")
+            answer_file = open(f"{check_path}\\out{i}", "r", encoding="utf-8")
         answer_content = answer_file.read()
         stdout, stderr, exeCount = run_program(run_cmd, input_file)
         input_file.close()
