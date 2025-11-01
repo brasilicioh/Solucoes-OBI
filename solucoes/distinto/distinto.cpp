@@ -1,3 +1,5 @@
+// Feito por Brasilicio Henrique
+
 #include <iostream>
 #include <vector>
 #include <unordered_set>

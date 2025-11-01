@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 int main() {
-    int sum, num;
+    int sum = 0, num;
 
     for (int i = 0; i < 4; i++)
     {
