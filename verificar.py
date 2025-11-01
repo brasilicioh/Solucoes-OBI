@@ -10,8 +10,12 @@ if args[1].endswith(".py"):
     extensao = "python"
 elif args[1].endswith(".cpp") or args[1].endswith(".c"):
     extensao = "gcc"
+elif args[1].endswith(".js"):
+    extensao = "javascript"
+elif args[1].endswith(".rs"):
+    extensao = "rust"
 else:
-    exit("Esperava arquivo .py, .c ou .cpp")
+    exit("Esperava arquivo .py, .c, .cpp, .js ou .rs")
 
 def validate_answer(result, answer):
     result = result.strip().replace('\r\n', '\n')
@@ -46,11 +50,22 @@ if extensao == "gcc":
         print(proc.stderr)
         exit(1)
     run_cmd = [exe_path]
+elif extensao == "rust":
+    exe_path = os.path.join("solucoes", base_name, base_name + ".exe")
+    compile_cmd = ["rustc", "-O", program_path, "-o", exe_path]
+    proc = subprocess.run(compile_cmd, capture_output=True, text=True)
+    if proc.returncode != 0:
+        print("Erro de compilação:")
+        print(proc.stderr)
+        exit(1)
+    run_cmd = [exe_path]
+elif extensao == "javascript":
+    run_cmd = ["node", program_path]
 else:
     run_cmd = ["python", program_path]
 
 tests_needed = len([name for name in os.listdir(os.path.join(os.getcwd(), folder_name))])
-timesCode = []
+timesCode = [0]
 for test in range(tests_needed):
     check_path = folder_name + "\\" + str(test+1)
     print(check_path)
@@ -76,4 +91,13 @@ for test in range(tests_needed):
         else:
             print(f"  Check {i} está incorreto")
     
-print(f"\nMax time: {max(timesCode):.6f}")
+print(f"\nMax time: {max(timesCode):.6f}" if len(timesCode) > 1 else "")
+
+if extensao in ["gcc", "rust"]:
+    try:
+        os.unlink(exe_path)
+        pdb_path = os.path.splitext(exe_path)[0] + ".pdb"
+        if os.path.exists(pdb_path):
+            os.unlink(pdb_path)
+    except:
+        pass
