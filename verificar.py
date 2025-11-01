@@ -50,6 +50,7 @@ else:
     run_cmd = ["python", program_path]
 
 tests_needed = len([name for name in os.listdir(os.path.join(os.getcwd(), folder_name))])
+timesCode = []
 for test in range(tests_needed):
     check_path = folder_name + "\\" + str(test+1)
     print(check_path)
@@ -71,5 +72,8 @@ for test in range(tests_needed):
         answer_file.close()
         if validate_answer(stdout, answer_content):
             print(f"  Check {i} está correto - {exeCount:.6f}")
+            timesCode.append(exeCount)
         else:
             print(f"  Check {i} está incorreto")
+    
+print(f"\nMax time: {max(timesCode):.6f}")
