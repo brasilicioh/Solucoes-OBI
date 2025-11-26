@@ -1,18 +1,24 @@
-from sys import stdin as inp, stdout as out
+# Feito por Kaio Henrique
 
-n = int(inp.readline())
-
-I = [int(inp.readline()) for _ in range(n)]
-
-maxInterval = 0
-start = 0
-interval = set()
+n = int(input())
+I = []
+maxsize = 0
+R = set()
+L = 0
 
 for i in range(n):
-    while I[i] in interval:
-        interval.remove(I[start])
-        start += 1
-    interval.add(I[i])
-    maxInterval = max(maxInterval, i - start + 1)
+    I.append(int(input()))
 
-out.write(str(maxInterval) + "\n")
+for elmnt in range(len(I)):
+    while I[elmnt] in R:
+        R.remove(I[L])
+        L += 1
+    else:
+        R.add(I[elmnt])
+        size = elmnt - L + 1
+        maxsize = max(maxsize, size)
+    
+print(max(maxsize, size))
+
+# Código testado e aprovado com corretor automático usando: https://github.com/brasilicioh/Solucoes-OBI/
+# Max runtime: 0.050s

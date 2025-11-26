@@ -3,31 +3,32 @@
 #include <iostream>
 #include <vector>
 #include <unordered_set>
-using namespace std;
 
 int main() {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
+    std::ios::sync_with_stdio(0);
+    std::cin.tie(0);
 
     int n;
-    cin >> n;
+    std::cin >> n;
 
-    vector<int> I(n);
-    for (int i = 0; i < n; i++) cin >> I[i];
+    std::vector<int> I(n);
+    for (int i = 0; i < n; i++) std::cin >> I[i];
 
-    unordered_set<int> interval;
+    std::unordered_set<int> interval;
     int maxInterval = 0, start = 0;
 
-    for (int i = 0; i < n; i++) {
-        while (interval.count(I[i])) {
+    for (int end = 0; end < n; end++) {
+        while (interval.count(I[end])) {
             interval.erase(I[start]);
             start++;
         }
-        interval.insert(I[i]);
-        maxInterval = max(maxInterval, i - start + 1);
+        interval.insert(I[end]);
+        maxInterval = std::max(maxInterval, end - start + 1);
     }
 
-    cout << maxInterval << "\n";
+    std::cout << maxInterval << "\n";
     return 0;
 }
 
+// Código testado e aprovado com corretor automático usando: https://github.com/brasilicioh/Solucoes-OBI/
+// Max runtime: 0.029s
